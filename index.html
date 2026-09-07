@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bosh sahifa · PDP Junior</title>
+<meta name="description" content="Farzandingiz uchun robototexnika, dasturlash va til kurslari. PDP Junior bilan kelajakni birga quring." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:    '#0B2530',
+          ink2:   '#0E2E3B',
+          teal:   '#13B7B4',
+          tealD:  '#0F9C99',
+          tealL:  '#E4F7F4',
+          mint:   '#E4F7F4',
+          mintC:  '#C6EFEA',
+          yellow: '#F6C94D',
+          yellowD:'#E8B531',
+          yellowL:'#FDEFC4',
+          green:  '#3FBE72',
+          greenC: '#C9F1D3',
+          greenL: '#EAFBF0',
+          violet: '#7C6FE0',
+          violetC:'#DCD8FA',
+          violetL:'#F1EFFC',
+          sand:   '#FBF8F1',
+        },
+        fontFamily: {
+          display: ['"Plus Jakarta Sans"', '"Segoe UI"', 'sans-serif'],
+          body: ['"Inter"', '"Segoe UI"', 'sans-serif'],
+        },
+        borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+        boxShadow: {
+          soft: '0 20px 45px -20px rgba(11,37,48,0.25)',
+          card: '0 10px 30px -12px rgba(11,37,48,0.15)',
+          glow: '0 0 0 6px rgba(19,183,180,0.12)',
+        }
+      }
+    }
+  }
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; }
+  h1,h2,h3,.font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, label:focus-within {
+    outline: 2px solid #13B7B4;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  @keyframes float-slow { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-14px) rotate(2deg)} }
+  @keyframes float-slower { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes spin-slow { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+  @keyframes twinkle { 0%,100%{opacity:.35;transform:scale(.85)} 50%{opacity:1;transform:scale(1.1)} }
+  @keyframes pop-in { from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:translateY(0)} }
+  .animate-float{animation:float-slow 6s ease-in-out infinite}
+  .animate-float-slower{animation:float-slower 5s ease-in-out infinite}
+  .animate-spin-slow{animation:spin-slow 40s linear infinite}
+  .animate-twinkle{animation:twinkle 2.4s ease-in-out infinite}
+  .animate-pop{animation:pop-in .6s ease-out both}
+  .delay-1{animation-delay:.15s}
+  .delay-2{animation-delay:.3s}
+  .delay-3{animation-delay:.45s}
+
+  /* Pastki chiziqli hover - link underline animate */
+  .link-underline{position:relative}
+  .link-underline::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:2px;background:currentColor;transition:width .25s ease}
+  .link-underline:hover::after{width:100%}
+
+  /* CSS-only tabs (radio hack) uchun */
+  .tab-panel{display:none}
+  input[type=radio]:checked + label{color:#0B2530}
+</style>
+</head>
+<body class="bg-white text-ink antialiased">
+
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-black/5">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+
+      <a href="index.html" class="flex items-center gap-2.5 shrink-0 group">
+        <span class="w-10 h-10 rounded-full flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:rotate-6 transition-transform">
+         <img src="images/pdplogo.png" alt="logo">
+        </span>
+        <span class="font-display font-extrabold text-lg text-ink tracking-tight">PDP <span class="text-teal">Junior</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Asosiy menyu">
+        <a href="index.html" aria-current="page" class="px-4 py-2.5 text-sm font-bold text-ink bg-mint rounded-full transition-colors">Bosh sahifa</a>
+        <a href="kurslar.html"  class="px-4 py-2.5 text-sm font-medium text-ink/55 hover:text-ink hover:bg-mint rounded-full transition-colors">Kurslar</a>
+        <a href="robototexnika.html"  class="px-4 py-2.5 text-sm font-medium text-ink/55 hover:text-ink hover:bg-mint rounded-full transition-colors">Robototexnika</a>
+        <a href="dasturlash.html"  class="px-4 py-2.5 text-sm font-medium text-ink/55 hover:text-ink hover:bg-mint rounded-full transition-colors">Dasturlash</a>
+        <a href="tillar.html"  class="px-4 py-2.5 text-sm font-medium text-ink/55 hover:text-ink hover:bg-mint rounded-full transition-colors">Tillar</a>
+      </nav>
+
+      <div class="flex items-center gap-2.5">
+        <a href="royxatdan-otish.html" class="hidden md:inline-flex items-center gap-2 rounded-full bg-teal text-white text-sm font-bold px-5 py-2.5 hover:bg-tealD transition-colors shadow-sm hover:shadow-glow">
+          Ro'yxatdan o'tish
+        </a>
+        <a href="profil.html" aria-label="Profil" class="w-11 h-11 rounded-full bg-ink hover:bg-ink2 flex items-center justify-center text-white transition-colors shrink-0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.4-3.6 4.2-5.5 7.5-5.5s6.1 1.9 7.5 5.5"/></svg>
+        </a>
+
+        <label for="mnav" class="lg:hidden w-11 h-11 rounded-full border border-black/10 flex items-center justify-center cursor-pointer hover:bg-mint transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <input type="checkbox" id="mnav" class="peer hidden">
+  <nav class="lg:hidden max-h-0 peer-checked:max-h-[26rem] overflow-hidden transition-all duration-300 border-t border-black/5 bg-white" aria-label="Mobil menyu">
+    <div class="px-6 py-4 flex flex-col gap-1">
+      <a href="index.html" class="px-3 py-3 rounded-xl text-sm font-semibold hover:bg-mint">Bosh sahifa</a>
+      <a href="kurslar.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Kurslar</a>
+      <a href="robototexnika.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Robototexnika</a>
+      <a href="dasturlash.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Dasturlash</a>
+      <a href="tillar.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Tillar</a>
+      <a href="royxatdan-otish.html" class="mt-2 text-center rounded-full bg-teal text-white text-sm font-bold px-5 py-3">Ro'yxatdan o'tish</a>
+      <a href="profil.html" class="text-center rounded-full border border-black/10 text-sm font-semibold px-5 py-3">Profil</a>
+    </div>
+  </nav>
+</header>
+<!-- ================= HERO ================= -->
+<section class="relative overflow-hidden bg-mint">
+  <div class="pointer-events-none absolute right-[6%] top-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full border border-teal/25 border-dashed animate-spin-slow hidden md:block"></div>
+  <div class="pointer-events-none absolute right-[13%] top-[18%] animate-twinkle">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 0l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3L12 0z"/></svg>
+  </div>
+  <div class="pointer-events-none absolute left-[46%] bottom-[16%] animate-twinkle delay-2 hidden md:block">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="#13B7B4"><path d="M12 0l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3L12 0z"/></svg>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 pt-16 pb-32 lg:pt-20 lg:pb-40">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <div class="max-w-xl animate-pop">
+        <span class="inline-flex items-center gap-2 bg-white text-teal font-semibold text-xs px-4 py-2 rounded-full shadow-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal"></span>
+          O'rganish endi qiziqarli!
+        </span>
+
+        <h1 class="font-display font-extrabold text-[2.6rem] sm:text-6xl leading-[1.05] tracking-tight mt-6 text-ink">
+          Kelajakni <span class="text-teal">birga</span> quramiz.
+        </h1>
+
+        <p class="mt-6 text-base sm:text-lg text-ink/60 leading-relaxed">
+          Farzandingiz uchun zamonaviy bilimlar, ijodkorlik va cheksiz imkoniyatlar dunyosiga xush kelibsiz.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-5">
+          <a href="kurslar.html" class="inline-flex items-center gap-2 bg-ink text-white font-semibold text-sm px-6 py-4 rounded-full hover:bg-teal transition-colors shadow-soft hover:shadow-glow">
+            Kurslarni ko'rish
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#nega-biz" class="inline-flex items-center gap-3 font-semibold text-sm text-ink group">
+            <span class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:bg-teal transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#0B2530" class="group-hover:fill-white transition-colors"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+            <span class="link-underline">Qanday ishlaydi?</span>
+          </a>
+        </div>
+
+        <div class="mt-10 flex items-center gap-4">
+          <div class="flex -space-x-3">
+            <span class="w-10 h-10 rounded-full ring-4 ring-mint bg-yellowL flex items-center justify-center text-sm font-bold text-ink">A</span>
+            <span class="w-10 h-10 rounded-full ring-4 ring-mint bg-mintC flex items-center justify-center text-sm font-bold text-ink">M</span>
+            <span class="w-10 h-10 rounded-full ring-4 ring-mint bg-greenC flex items-center justify-center text-sm font-bold text-ink">S</span>
+            <span class="w-10 h-10 rounded-full ring-4 ring-mint bg-ink flex items-center justify-center text-xs font-bold text-white">+</span>
+          </div>
+          <div class="text-sm">
+            <p class="font-bold text-ink leading-none">10 000+</p>
+            <p class="text-ink/50 mt-1">baxtli o'quvchilar</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative flex justify-center lg:justify-end">
+        <div class="relative w-[300px] sm:w-[360px]">
+          <div class="absolute -left-10 top-10 sm:-left-14 bg-white rounded-2xl shadow-card px-4 py-3 flex items-center gap-3 animate-float z-10">
+            <span class="w-9 h-9 rounded-full bg-yellowL flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.6 10.8c.4.3.6.8.6 1.3v.4h6v-.4c0-.5.2-1 .6-1.3A6 6 0 0012 3z"/></svg>
+            </span>
+            <span class="text-xs font-bold text-ink leading-tight">Yangi<br/>g'oya!</span>
+          </div>
+
+          <div class="absolute -right-6 bottom-24 sm:-right-10 bg-white rounded-2xl shadow-card px-4 py-3 animate-float-slower delay-1 z-10">
+            <p class="text-lg font-extrabold text-ink leading-none">+98%</p>
+            <p class="text-[11px] text-ink/50 mt-1 flex items-center gap-1">natija
+              <svg width="14" height="10" viewBox="0 0 24 16" fill="none" stroke="#13B7B4" stroke-width="2.4" stroke-linecap="round"><path d="M1 14l7-8 5 4 9-9"/></svg>
+            </p>
+          </div>
+
+          <svg viewBox="0 0 320 340" class="w-full h-auto drop-shadow-xl">
+            <ellipse cx="160" cy="322" rx="90" ry="14" fill="#0B2530" opacity="0.06"/>
+            <rect x="152" y="18" width="8" height="26" rx="4" fill="#0B2530"/>
+            <path d="M156 6l2.3 8.7 8.7 2.3-8.7 2.3-2.3 8.7-2.3-8.7L147 17l8.7-2.3z" fill="#F6C94D"/>
+            <rect x="70" y="40" width="180" height="130" rx="65" fill="#13B7B4"/>
+            <circle cx="128" cy="105" r="9" fill="#0B2530"/>
+            <circle cx="192" cy="105" r="9" fill="#0B2530"/>
+            <path d="M120 130q40 26 80 0" fill="none" stroke="#0B2530" stroke-width="6" stroke-linecap="round"/>
+            <rect x="88" y="188" width="144" height="120" rx="34" fill="#0B2530"/>
+            <rect x="128" y="220" width="64" height="56" rx="14" fill="#13B7B4"/>
+            <path d="M160 234l3.6 7.4 8.1 1.1-5.9 5.7 1.4 8-7.2-3.8-7.2 3.8 1.4-8-5.9-5.7 8.1-1.1z" fill="white"/>
+            <rect x="52" y="208" width="24" height="70" rx="12" fill="#0B2530"/>
+            <rect x="244" y="208" width="24" height="70" rx="12" fill="#0B2530"/>
+            <rect x="112" y="300" width="26" height="34" rx="13" fill="#0B2530"/>
+            <rect x="182" y="300" width="26" height="34" rx="13" fill="#0B2530"/>
+          </svg>
+
+          <span class="absolute top-2 right-6 animate-twinkle"><svg width="16" height="16" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 0l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3L12 0z"/></svg></span>
+          <span class="absolute -bottom-2 left-6 animate-twinkle delay-1"><svg width="12" height="12" viewBox="0 0 24 24" fill="#13B7B4"><path d="M12 0l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3L12 0z"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SEARCH ================= -->
+<div class="relative z-20 -mt-16 px-6 lg:px-8">
+  <form action="kurslar.html" method="get" class="max-w-4xl mx-auto bg-white rounded-3xl shadow-soft border border-black/5 p-3 sm:p-3.5 flex flex-col sm:flex-row items-stretch gap-3">
+    <div class="flex items-center gap-3 flex-1 px-4">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#13B7B4" stroke-width="2.2" stroke-linecap="round" class="shrink-0"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="search" name="q" placeholder="Qaysi kursni izlayapsiz?" aria-label="Kurs qidirish" class="w-full bg-transparent py-3 text-sm placeholder:text-ink/40 focus:outline-none" />
+    </div>
+    <button type="submit" class="inline-flex items-center justify-center gap-2 bg-ink text-white font-semibold text-sm px-6 py-3.5 rounded-2xl hover:bg-teal transition-colors shrink-0">
+      Qidirish
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </form>
+</div>
+
+<!-- ================= POPULAR COURSES ================= -->
+<section class="max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-8">
+  <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+    <div>
+      <p class="text-teal font-bold text-xs tracking-[0.14em] uppercase mb-3">Eng mashhur kurslar</p>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-ink tracking-tight">Qiziqarli o'rganish vaqti</h2>
+    </div>
+    <a href="kurslar.html" class="inline-flex items-center gap-1.5 text-teal font-bold text-sm hover:gap-2.5 transition-all shrink-0">
+      Barchasini ko'rish
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+    </a>
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <article class="group rounded-4xl border border-black/5 shadow-card overflow-hidden hover:-translate-y-2 hover:shadow-soft transition-all duration-300">
+      <a href="robototexnika.html" class="relative bg-mintC h-48 flex items-center justify-center overflow-hidden">
+        <span class="absolute top-4 right-4 animate-twinkle"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0B2530" opacity="0.25"><path d="M12 0l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3L12 0z"/></svg></span>
+        <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="group-hover:scale-110 transition-transform duration-300">
+          <rect x="4" y="8" width="16" height="11" rx="4"/><circle cx="9" cy="13.5" r="1" fill="#0B2530"/><circle cx="15" cy="13.5" r="1" fill="#0B2530"/>
+          <path d="M10.2 3v4M11 2.6a1.3 1.3 0 100 2.6 1.3 1.3 0 000-2.6z" fill="#0B2530"/><path d="M4 13H2M22 13h-2"/>
+        </svg>
+      </a>
+      <div class="p-6">
+        <div class="flex items-center justify-between text-xs mb-2">
+          <span class="text-ink/50 font-medium">Robototexnika</span>
+          <span class="inline-flex items-center gap-1 font-bold text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>4.9</span>
+        </div>
+        <h3 class="font-display font-bold text-lg text-ink mb-3"><a href="robototexnika.html" class="hover:text-teal transition-colors">Robototexnikaga kirish</a></h3>
+        <div class="flex items-center gap-3 text-xs text-ink/50 mb-5">
+          <span class="inline-flex items-center gap-1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>Boshlang'ich</span>
+          <span class="inline-flex items-center gap-1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14c2.4.3 4.5 2.4 4.5 5.3"/></svg>6–10 yosh</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <p class="font-display font-extrabold text-ink">149 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
+          <a href="royxatdan-otish.html" aria-label="Robototexnikaga kirish kursiga ro'yxatdan o'tish" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-teal transition-colors">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="group rounded-4xl border border-black/5 shadow-card overflow-hidden hover:-translate-y-2 hover:shadow-soft transition-all duration-300">
+      <a href="dasturlash.html" class="relative bg-yellowL h-48 flex items-center justify-center overflow-hidden">
+        <span class="absolute top-4 right-4 animate-twinkle delay-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0B2530" opacity="0.25"><path d="M12 0l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3L12 0z"/></svg></span>
+        <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="group-hover:scale-110 transition-transform duration-300">
+          <rect x="2.5" y="8" width="19" height="10" rx="5"/><path d="M15.5 11.5v3M14 13h3"/><circle cx="7.5" cy="13" r="1.7" fill="#0B2530" stroke="none"/><circle cx="18.5" cy="11.7" r="0.9" fill="#0B2530" stroke="none"/><circle cx="17" cy="14.3" r="0.9" fill="#0B2530" stroke="none"/>
+        </svg>
+      </a>
+      <div class="p-6">
+        <div class="flex items-center justify-between text-xs mb-2">
+          <span class="text-ink/50 font-medium">Dasturlash</span>
+          <span class="inline-flex items-center gap-1 font-bold text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>4.8</span>
+        </div>
+        <h3 class="font-display font-bold text-lg text-ink mb-3"><a href="dasturlash.html" class="hover:text-teal transition-colors">Scratch'da dasturlash</a></h3>
+        <div class="flex items-center gap-3 text-xs text-ink/50 mb-5">
+          <span class="inline-flex items-center gap-1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>Boshlang'ich</span>
+          <span class="inline-flex items-center gap-1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14c2.4.3 4.5 2.4 4.5 5.3"/></svg>7–12 yosh</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <p class="font-display font-extrabold text-ink">129 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
+          <a href="royxatdan-otish.html" aria-label="Scratch'da dasturlash kursiga ro'yxatdan o'tish" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-teal transition-colors">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="group rounded-4xl border border-black/5 shadow-card overflow-hidden hover:-translate-y-2 hover:shadow-soft transition-all duration-300">
+      <a href="tillar.html" class="relative bg-greenC h-48 flex items-center justify-center overflow-hidden">
+        <span class="absolute top-4 right-4 animate-twinkle delay-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0B2530" opacity="0.25"><path d="M12 0l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3L12 0z"/></svg></span>
+        <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="group-hover:scale-110 transition-transform duration-300">
+          <rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 16l3-8 3 8M8.8 13.5h4.4"/><path d="M15 16l1.2-3.2M15 16l-1.2-3.2M13.8 12.8h2.4"/>
+        </svg>
+      </a>
+      <div class="p-6">
+        <div class="flex items-center justify-between text-xs mb-2">
+          <span class="text-ink/50 font-medium">Ingliz tili</span>
+          <span class="inline-flex items-center gap-1 font-bold text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>4.9</span>
+        </div>
+        <h3 class="font-display font-bold text-lg text-ink mb-3"><a href="tillar.html" class="hover:text-teal transition-colors">English for Kids</a></h3>
+        <div class="flex items-center gap-3 text-xs text-ink/50 mb-5">
+          <span class="inline-flex items-center gap-1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>Boshlang'ich</span>
+          <span class="inline-flex items-center gap-1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14c2.4.3 4.5 2.4 4.5 5.3"/></svg>6–12 yosh</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <p class="font-display font-extrabold text-ink">119 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
+          <a href="royxatdan-otish.html" aria-label="English for Kids kursiga ro'yxatdan o'tish" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-teal transition-colors">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= YO'NALISHLAR ================= -->
+<section class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
+  <p class="text-teal font-bold text-xs tracking-[0.14em] uppercase mb-3">Yo'nalishlar</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-ink tracking-tight mb-10">Qaysi soha seni qiziqtiradi?</h2>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <a href="robototexnika.html" class="group relative rounded-4xl bg-mintC p-8 min-h-[280px] flex flex-col justify-between overflow-hidden hover:-translate-y-2 transition-transform duration-300">
+      <svg class="absolute -right-4 -bottom-4 opacity-20 group-hover:opacity-30 group-hover:scale-110 transition-all duration-300" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.2"><rect x="4" y="8" width="16" height="11" rx="4"/><circle cx="9" cy="13.5" r="1" fill="#0B2530"/><circle cx="15" cy="13.5" r="1" fill="#0B2530"/></svg>
+      <div>
+        <h3 class="font-display font-bold text-2xl text-ink mb-2">Robototexnika</h3>
+        <p class="text-ink/60 text-sm">O'z qo'ling bilan robotlar yarat</p>
+      </div>
+      <span class="inline-flex items-center gap-1.5 font-semibold text-sm text-ink relative z-10">Yo'nalishni ko'rish
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </span>
+    </a>
+
+    <a href="dasturlash.html" class="group relative rounded-4xl bg-yellowL p-8 min-h-[280px] flex flex-col justify-between overflow-hidden hover:-translate-y-2 transition-transform duration-300">
+      <svg class="absolute -right-6 -bottom-6 opacity-20 group-hover:opacity-30 group-hover:scale-110 transition-all duration-300" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.2"><rect x="2.5" y="8" width="19" height="10" rx="5"/></svg>
+      <div>
+        <h3 class="font-display font-bold text-2xl text-ink mb-2">Dasturlash</h3>
+        <p class="text-ink/60 text-sm">G'oyalarni kodga aylantir</p>
+      </div>
+      <span class="inline-flex items-center gap-1.5 font-semibold text-sm text-ink relative z-10">Yo'nalishni ko'rish
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </span>
+    </a>
+
+    <a href="tillar.html" class="group relative rounded-4xl bg-greenC p-8 min-h-[280px] flex flex-col justify-between overflow-hidden hover:-translate-y-2 transition-transform duration-300">
+      <svg class="absolute -right-6 -bottom-6 opacity-20 group-hover:opacity-30 group-hover:scale-110 transition-all duration-300" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 16l3-8 3 8M8.8 13.5h4.4"/></svg>
+      <div>
+        <h3 class="font-display font-bold text-2xl text-ink mb-2">Tillar</h3>
+        <p class="text-ink/60 text-sm">Dunyo bilan birga gaplash</p>
+      </div>
+      <span class="inline-flex items-center gap-1.5 font-semibold text-sm text-ink relative z-10">Yo'nalishni ko'rish
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </span>
+    </a>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section class="bg-ink">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 grid grid-cols-2 lg:grid-cols-4 gap-10 text-white">
+    <div><p class="font-display font-extrabold text-4xl sm:text-5xl"><span>10K</span><span class="text-teal">+</span></p><p class="text-white/50 text-sm mt-2">Faol o'quvchilar</p></div>
+    <div><p class="font-display font-extrabold text-4xl sm:text-5xl"><span>50</span><span class="text-teal">+</span></p><p class="text-white/50 text-sm mt-2">Zamonaviy kurslar</p></div>
+    <div><p class="font-display font-extrabold text-4xl sm:text-5xl"><span>98</span><span class="text-teal">%</span></p><p class="text-white/50 text-sm mt-2">Ota-onalar mamnunligi</p></div>
+    <div><p class="font-display font-extrabold text-4xl sm:text-5xl"><span>15</span><span class="text-teal">+</span></p><p class="text-white/50 text-sm mt-2">Malakali mentorlar</p></div>
+  </div>
+</section>
+
+<!-- ================= NEGA BIZ ================= -->
+<section id="nega-biz" class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
+  <p class="text-teal font-bold text-xs tracking-[0.14em] uppercase mb-3">Nega aynan PDP Junior?</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-ink tracking-tight mb-12">Har bir bola — ajoyib kashfiyotchi</h2>
+
+  <div class="grid sm:grid-cols-3 gap-6">
+    <div class="rounded-3xl border border-black/5 shadow-card p-7 hover:-translate-y-1.5 hover:shadow-soft transition-all duration-300">
+      <span class="w-12 h-12 rounded-2xl bg-yellowL flex items-center justify-center mb-5"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span>
+      <h3 class="font-display font-bold text-lg text-ink mb-2">Qiziqarli darslar</h3>
+      <p class="text-ink/55 text-sm leading-relaxed">O'yinlar va amaliy loyihalar orqali o'rganamiz.</p>
+    </div>
+    <div class="rounded-3xl border border-black/5 shadow-card p-7 hover:-translate-y-1.5 hover:shadow-soft transition-all duration-300">
+      <span class="w-12 h-12 rounded-2xl bg-mintC flex items-center justify-center mb-5"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-6.2 6-6.2s6 2.8 6 6.2"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.8 14.3c2.5.4 4.7 2.6 4.7 5.7"/></svg></span>
+      <h3 class="font-display font-bold text-lg text-ink mb-2">Mehribon mentorlar</h3>
+      <p class="text-ink/55 text-sm leading-relaxed">Har bir o'quvchiga individual e'tibor va yordam.</p>
+    </div>
+    <div class="rounded-3xl border border-black/5 shadow-card p-7 hover:-translate-y-1.5 hover:shadow-soft transition-all duration-300">
+      <span class="w-12 h-12 rounded-2xl bg-greenC flex items-center justify-center mb-5"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0V4z"/><path d="M7 6H4a3 3 0 003 3M17 6h3a3 3 0 01-3 3"/></svg></span>
+      <h3 class="font-display font-bold text-lg text-ink mb-2">Haqiqiy natijalar</h3>
+      <p class="text-ink/55 text-sm leading-relaxed">Bilimni amalda qo'llab, katta loyihalar yaratamiz.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIAL ================= -->
+<section class="bg-mint">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-24 grid lg:grid-cols-[1fr_auto_1fr] gap-8 items-center">
+    <div>
+      <p class="text-teal font-bold text-xs tracking-[0.14em] uppercase mb-4">Ota-onalar fikri</p>
+      <h3 class="font-display font-extrabold text-3xl sm:text-4xl leading-tight text-ink">"Farzandim darslarni <span class="text-teal">intizorlik bilan</span> kutadi!"</h3>
+      <div class="flex items-center gap-1 mt-6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>
+      </div>
+    </div>
+    <span class="hidden lg:block text-teal/25 font-display text-8xl leading-none select-none">"</span>
+    <div class="flex items-center gap-4">
+      <span class="w-14 h-14 rounded-full bg-white shadow-card flex items-center justify-center font-display font-bold text-teal text-xl shrink-0">MK</span>
+      <div><p class="font-display font-bold text-ink">Mohira Karimova</p><p class="text-ink/50 text-sm">Azizbekning onasi</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA BANNER ================= -->
+<section class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
+  <div class="relative overflow-hidden bg-yellow rounded-5xl px-8 sm:px-14 py-14 sm:py-20 flex flex-col sm:flex-row items-center justify-between gap-10">
+    <span class="absolute top-8 right-10 animate-twinkle hidden sm:block"><svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M12 0l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3L12 0z"/></svg></span>
+    <div class="relative z-10 max-w-lg text-center sm:text-left">
+      <p class="text-ink/70 font-bold text-xs tracking-[0.14em] uppercase mb-4">Bugunoq boshlang</p>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-ink leading-tight mb-8">Farzandingizning kelajagi <span class="text-white">bugun</span> boshlanadi.</h2>
+      <a href="royxatdan-otish.html" class="inline-flex items-center gap-2 bg-ink text-white font-semibold text-sm px-6 py-4 rounded-full hover:bg-white hover:text-ink transition-colors">
+        Bepul darsni sinab ko'rish
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <svg class="relative z-10 w-24 sm:w-32 shrink-0 animate-float" viewBox="0 0 100 130" fill="none">
+      <path d="M50 4C68 20 74 46 68 78l-18 10-18-10C26 46 32 20 50 4z" fill="#0B2530"/>
+      <circle cx="50" cy="46" r="11" fill="#F6C94D"/>
+      <path d="M32 78l-8 26 18-12M68 78l8 26-18-12" fill="#0B2530"/>
+      <path d="M40 90c-6 8-6 18-2 26 6-4 10-12 10-20zM60 90c6 8 6 18 2 26-6-4-10-12-10-20z" fill="#F6C94D"/>
+    </svg>
+  </div>
+</section>
+<footer class="bg-ink text-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 grid sm:grid-cols-2 lg:grid-cols-5 gap-12">
+
+    <div class="lg:col-span-2 lg:pr-8">
+      <div class="flex items-center gap-2.5 mb-4">
+        <span class="w-9 h-9 rounded-full flex items-center justify-center">
+          <img src="images/pdplogo.png" alt="">
+        </span>
+        <span class="font-display font-extrabold text-lg">PDP Junior</span>
+      </div>
+      <p class="text-white/45 text-sm leading-relaxed max-w-xs">Bolalar kelajagini birga quramiz — robototexnika, dasturlash va tillar bo'yicha zamonaviy ta'lim.</p>
+      <div class="flex items-center gap-3 mt-6">
+        <a href="https://t.me/PDPJunior" aria-label="Telegram" class="w-9 h-9 rounded-full bg-white/10 hover:bg-teal flex items-center justify-center transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M21.9 4.3L18.6 20c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9L18 7.5c.4-.4-.1-.6-.6-.2L7 13.9l-4.7-1.5c-1-.3-1-1 .2-1.5L20.6 3.5c.8-.3 1.5.2 1.3.8z"/></svg>
+        </a>
+        <a href="https://instagram.com/pdpuz.junior" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/10 hover:bg-teal flex items-center justify-center transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        </a>
+        <a href="https://youtube.com/@pdpuz.junior" aria-label="YouTube" class="w-9 h-9 rounded-full bg-white/10 hover:bg-teal flex items-center justify-center transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M23 12s0-3.6-.5-5.3c-.3-1-1-1.7-2-2C18.9 4.2 12 4.2 12 4.2s-6.9 0-8.5.5c-1 .3-1.7 1-2 2C1 8.4 1 12 1 12s0 3.6.5 5.3c.3 1 1 1.7 2 2 1.6.5 8.5.5 8.5.5s6.9 0 8.5-.5c1-.3 1.7-1 2-2 .5-1.7.5-5.3.5-5.3zM9.8 15.5V8.5l6 3.5-6 3.5z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <p class="text-xs font-bold tracking-[0.14em] uppercase text-white/40 mb-5">Yo'nalishlar</p>
+      <ul class="space-y-3 text-sm text-white/70">
+        <li><a href="robototexnika.html" class="hover:text-teal transition-colors">Robototexnika</a></li>
+        <li><a href="dasturlash.html" class="hover:text-teal transition-colors">Dasturlash</a></li>
+        <li><a href="tillar.html" class="hover:text-teal transition-colors">Tillar</a></li>
+        <li><a href="kurslar.html" class="hover:text-teal transition-colors">Barcha kurslar</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-xs font-bold tracking-[0.14em] uppercase text-white/40 mb-5">Platforma</p>
+      <ul class="space-y-3 text-sm text-white/70">
+        <li><a href="royxatdan-otish.html" class="hover:text-teal transition-colors">Ro'yxatdan o'tish</a></li>
+        <li><a href="profil.html" class="hover:text-teal transition-colors">Profil</a></li>
+        <li><a href="index.html#nega-biz" class="hover:text-teal transition-colors">Nega PDP Junior?</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-xs font-bold tracking-[0.14em] uppercase text-white/40 mb-5">Biz bilan aloqa</p>
+      <ul class="space-y-3 text-sm text-white/70">
+        <li class="flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#13B7B4" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.4 2.1L8 9.9a16 16 0 006 6l1.4-1.4a2 2 0 012.1-.4c.9.3 1.8.5 2.7.6a2 2 0 011.8 2.2z"/></svg>
+          <a href="tel:+998712005050" class="hover:text-teal transition-colors">+998 71 747 47 47</a>
+        </li>
+        <li class="flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#13B7B4" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 6 10-6"/></svg>
+          <a href="mailto:info@pdpjunior.uz" class="hover:text-teal transition-colors">info@pdpjunior.uz</a>
+        </li>
+        <li class="flex items-center gap-2 text-white/60">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#13B7B4" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Toshkent, Chilonzor
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+      <p>© 2026 PDP Junior. Barcha huquqlar himoyalangan.</p>
+      <p>Toshkent, O'zbekiston</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+
+
