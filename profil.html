@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Profil · PDP Junior</title>
-<meta name="description" content="Shaxsiy kabinetingizga kiring." />
+<meta name="description" content="Shaxsiy kabinetingiz." />
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -77,26 +77,51 @@
   .delay-2{animation-delay:.3s}
   .delay-3{animation-delay:.45s}
 
-  /* Pastki chiziqli hover - link underline animate */
   .link-underline{position:relative}
   .link-underline::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:2px;background:currentColor;transition:width .25s ease}
   .link-underline:hover::after{width:100%}
 
-  /* CSS-only tabs (radio hack) uchun */
   .tab-panel{display:none}
   input[type=radio]:checked + label{color:#0B2530}
+
+  /* ===== JS-siz modal (:target orqali) ===== */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(11,37,48,.55);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    display:flex; align-items:flex-start; justify-content:center;
+    padding:5.5rem 1rem 2rem;
+    overflow-y:auto;
+    opacity:0; visibility:hidden;
+    transition:opacity .25s ease, visibility 0s linear .25s;
+  }
+  .modal-overlay:target{
+    opacity:1; visibility:visible;
+    transition:opacity .25s ease, visibility 0s linear 0s;
+  }
+  .modal-backdrop-link{ position:absolute; inset:0; z-index:0; }
+  .modal-panel{
+    position:relative; z-index:1;
+    transform:translateY(14px);
+    transition:transform .25s ease;
+  }
+  .modal-overlay:target .modal-panel{ transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .modal-overlay, .modal-panel{ transition:none; }
+  }
+  @media (max-width: 480px){
+    .modal-overlay{ padding:4.5rem .75rem 1.5rem; align-items:flex-start; }
+  }
 </style>
 </head>
-<body class="bg-white text-ink antialiased">
+<body class="bg-white text-ink antialiased overflow-x-hidden">
 
 <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-black/5">
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
 
       <a href="index.html" class="flex items-center gap-2.5 shrink-0 group">
-        <span class="w-10 h-10 rounded-full flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:rotate-6 transition-transform">
-         <img src="images/pdplogo.png" alt="">
-        </span>
+        <img src="images/pdplogo.png" alt="PDP Junior logotipi" class="w-10 h-10 object-contain shrink-0 group-hover:scale-105 transition-transform" />
         <span class="font-display font-extrabold text-lg text-ink tracking-tight">PDP <span class="text-teal">Junior</span></span>
       </a>
 
@@ -109,7 +134,7 @@
       </nav>
 
       <div class="flex items-center gap-2.5">
-        <a href="royxatdan-otish.html" class="hidden md:inline-flex items-center gap-2 rounded-full bg-teal text-white text-sm font-bold px-5 py-2.5 hover:bg-tealD transition-colors shadow-sm hover:shadow-glow">
+        <a href="#royxatdan-otish-modal" class="hidden md:inline-flex items-center gap-2 rounded-full bg-teal text-white text-sm font-bold px-5 py-2.5 hover:bg-tealD transition-colors shadow-sm hover:shadow-glow">
           Ro'yxatdan o'tish
         </a>
         <a href="profil.html" aria-label="Profil" class="w-11 h-11 rounded-full bg-ink hover:bg-ink2 flex items-center justify-center text-white transition-colors shrink-0">
@@ -124,89 +149,128 @@
   </div>
 
   <input type="checkbox" id="mnav" class="peer hidden">
-  <nav class="lg:hidden max-h-0 peer-checked:max-h-[26rem] overflow-hidden transition-all duration-300 border-t border-black/5 bg-white" aria-label="Mobil menyu">
+  <nav class="lg:hidden max-h-0 peer-checked:max-h-[34rem] overflow-hidden transition-all duration-300 border-t border-black/5 bg-white" aria-label="Mobil menyu">
     <div class="px-6 py-4 flex flex-col gap-1">
       <a href="index.html" class="px-3 py-3 rounded-xl text-sm font-semibold hover:bg-mint">Bosh sahifa</a>
       <a href="kurslar.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Kurslar</a>
       <a href="robototexnika.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Robototexnika</a>
       <a href="dasturlash.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Dasturlash</a>
       <a href="tillar.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Tillar</a>
-      <a href="royxatdan-otish.html" class="mt-2 text-center rounded-full bg-teal text-white text-sm font-bold px-5 py-3">Ro'yxatdan o'tish</a>
+      <a href="#royxatdan-otish-modal" class="mt-2 text-center rounded-full bg-teal text-white text-sm font-bold px-5 py-3">Ro'yxatdan o'tish</a>
       <a href="profil.html" class="text-center rounded-full border border-black/10 text-sm font-semibold px-5 py-3">Profil</a>
     </div>
   </nav>
 </header>
-<section class="bg-mint min-h-[calc(100vh-5rem)] flex items-center">
-  <div class="max-w-md mx-auto w-full px-6 py-16">
+<section class="bg-mint">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 pt-14 pb-24">
 
-    <div class="text-center mb-8">
-      <span class="w-14 h-14 rounded-full bg-teal flex items-center justify-center mx-auto mb-5 shadow-soft">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.4-3.6 4.2-5.5 7.5-5.5s6.1 1.9 7.5 5.5"/></svg>
-      </span>
-      <h1 class="font-display font-extrabold text-2xl sm:text-3xl text-ink">Xush kelibsiz!</h1>
-      <p class="text-ink/50 text-sm mt-2">Shaxsiy kabinetingizga kiring yoki yangi hisob yarating.</p>
+    <!-- Profil header card -->
+    <div class="bg-white rounded-4xl shadow-card p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-6">
+      <span class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-teal flex items-center justify-center font-display font-extrabold text-white text-3xl shrink-0 mx-auto sm:mx-0">AV</span>
+
+      <div class="flex-1 text-center sm:text-left">
+        <h1 class="font-display font-extrabold text-2xl sm:text-3xl text-ink">Aziza Valiyeva</h1>
+        <p class="text-ink/50 text-sm mt-1">aziza.valiyeva@example.com</p>
+        <div class="flex flex-wrap justify-center sm:justify-start gap-2 mt-4">
+          <span class="inline-flex items-center gap-1.5 bg-mint text-ink text-xs font-semibold px-3 py-1.5 rounded-full">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#13B7B4" stroke-width="2.4"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Toshkent
+          </span>
+          <span class="inline-flex items-center gap-1.5 bg-mint text-ink text-xs font-semibold px-3 py-1.5 rounded-full">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#13B7B4" stroke-width="2.4"><path d="M8 7V3M16 7V3M3 11h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>
+            A'zo bo'lgan: Yanvar 2026
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5 justify-center sm:justify-end shrink-0">
+        <a href="#" class="inline-flex items-center gap-2 bg-mint hover:bg-mintC text-ink font-semibold text-sm px-5 py-2.5 rounded-full transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+          Tahrirlash
+        </a>
+        <a href="index.html" class="inline-flex items-center gap-2 border border-black/10 hover:bg-mint text-ink font-semibold text-sm px-5 py-2.5 rounded-full transition-colors">
+          Chiqish
+        </a>
+      </div>
     </div>
 
-    <div class="bg-white rounded-4xl shadow-soft p-8">
-
-      <!-- CSS-only tabs -->
-      <input type="radio" name="authtab" id="tab-login" class="peer/login hidden" checked>
-      <input type="radio" name="authtab" id="tab-signup" class="peer/signup hidden">
-
-      <div class="grid grid-cols-2 gap-2 bg-mint rounded-full p-1.5 mb-8 text-sm font-bold">
-        <label for="tab-login" class="text-center py-2.5 rounded-full cursor-pointer text-ink/50 peer-checked/login:peer-[]:bg-white transition-colors [input:checked+&]:bg-white [input:checked+&]:text-ink [input:checked+&]:shadow-sm">Kirish</label>
-        <label for="tab-signup" class="text-center py-2.5 rounded-full cursor-pointer text-ink/50 [input:checked+&]:bg-white [input:checked+&]:text-ink [input:checked+&]:shadow-sm transition-colors">Ro'yxatdan o'tish</label>
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-3 sm:gap-6 mt-6">
+      <div class="bg-white rounded-3xl shadow-card p-5 sm:p-6 text-center">
+        <p class="font-display font-extrabold text-2xl sm:text-3xl text-ink">2</p>
+        <p class="text-ink/50 text-xs sm:text-sm mt-1">Faol kurs</p>
       </div>
-
-      <!-- LOGIN panel -->
-      <div class="hidden peer-checked/login:block space-y-5">
-        <div>
-          <label for="login-email" class="block text-xs font-semibold text-ink/60 mb-2">Email</label>
-          <input id="login-email" type="email" placeholder="email@example.com" class="w-full rounded-2xl border border-black/10 px-4 py-3.5 text-sm placeholder:text-ink/30 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition" />
-        </div>
-        <div>
-          <label for="login-pass" class="block text-xs font-semibold text-ink/60 mb-2">Parol</label>
-          <input id="login-pass" type="password" placeholder="••••••••" class="w-full rounded-2xl border border-black/10 px-4 py-3.5 text-sm placeholder:text-ink/30 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition" />
-        </div>
-        <div class="flex items-center justify-between text-xs">
-          <label class="flex items-center gap-2 text-ink/50 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 rounded accent-teal">Meni eslab qol</label>
-          <a href="#" class="text-teal font-semibold hover:underline">Parolni unutdingizmi?</a>
-        </div>
-        <button type="submit" class="w-full bg-ink text-white font-bold text-sm px-6 py-4 rounded-full hover:bg-teal transition-colors">Kirish</button>
+      <div class="bg-white rounded-3xl shadow-card p-5 sm:p-6 text-center">
+        <p class="font-display font-extrabold text-2xl sm:text-3xl text-ink">24</p>
+        <p class="text-ink/50 text-xs sm:text-sm mt-1">Tugatilgan dars</p>
       </div>
-
-      <!-- SIGNUP panel -->
-      <div class="hidden peer-checked/signup:block space-y-5">
-        <div>
-          <label for="su-name" class="block text-xs font-semibold text-ink/60 mb-2">To'liq ism</label>
-          <input id="su-name" type="text" placeholder="Ism Familiya" class="w-full rounded-2xl border border-black/10 px-4 py-3.5 text-sm placeholder:text-ink/30 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition" />
-        </div>
-        <div>
-          <label for="su-email" class="block text-xs font-semibold text-ink/60 mb-2">Email</label>
-          <input id="su-email" type="email" placeholder="email@example.com" class="w-full rounded-2xl border border-black/10 px-4 py-3.5 text-sm placeholder:text-ink/30 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition" />
-        </div>
-        <div>
-          <label for="su-pass" class="block text-xs font-semibold text-ink/60 mb-2">Parol</label>
-          <input id="su-pass" type="password" placeholder="Kamida 8 belgi" class="w-full rounded-2xl border border-black/10 px-4 py-3.5 text-sm placeholder:text-ink/30 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition" />
-        </div>
-        <button type="submit" class="w-full bg-teal text-white font-bold text-sm px-6 py-4 rounded-full hover:bg-ink transition-colors">Hisob yaratish</button>
+      <div class="bg-white rounded-3xl shadow-card p-5 sm:p-6 text-center">
+        <p class="font-display font-extrabold text-2xl sm:text-3xl text-ink">1</p>
+        <p class="text-ink/50 text-xs sm:text-sm mt-1">Sertifikat</p>
       </div>
-
-      <div class="flex items-center gap-3 my-7">
-        <span class="h-px bg-black/10 flex-1"></span>
-        <span class="text-xs text-ink/40 font-medium">yoki</span>
-        <span class="h-px bg-black/10 flex-1"></span>
-      </div>
-
-      <button type="button" class="w-full flex items-center justify-center gap-3 border border-black/10 rounded-full px-6 py-3.5 text-sm font-semibold text-ink hover:bg-mint transition-colors">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-2.9l-3.9-3c-1.1.7-2.5 1.2-4.1 1.2-3.1 0-5.8-2.1-6.7-5H1.3v3.1C3.3 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.3 14.3c-.2-.7-.4-1.5-.4-2.3s.1-1.6.4-2.3V6.6H1.3C.5 8.2 0 10 0 12s.5 3.8 1.3 5.4l4-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4C18 1.2 15.2 0 12 0 7.3 0 3.3 2.7 1.3 6.6l4 3.1c.9-2.9 3.6-5 6.7-5z"/></svg>
-        Google orqali davom etish
-      </button>
     </div>
 
-    <p class="text-center text-xs text-ink/40 mt-8">
-      Hisobingiz yo'qmi? <a href="royxatdan-otish.html" class="text-teal font-semibold hover:underline">Kurs uchun ariza qoldiring</a>
-    </p>
+    <!-- Mening kurslarim -->
+    <div class="mt-12">
+      <h2 class="font-display font-extrabold text-xl sm:text-2xl text-ink mb-6">Mening kurslarim</h2>
+
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div class="bg-white rounded-4xl shadow-card p-6 flex items-center gap-5">
+          <span class="w-14 h-14 rounded-2xl bg-mintC flex items-center justify-center shrink-0">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6"><rect x="4" y="8" width="16" height="11" rx="4"/><circle cx="9" cy="13.5" r="1" fill="#0B2530"/><circle cx="15" cy="13.5" r="1" fill="#0B2530"/></svg>
+          </span>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-display font-bold text-ink truncate">Robototexnikaga kirish</h3>
+            <p class="text-ink/50 text-xs mb-2">12 haftadan 8 tasi tugadi</p>
+            <div class="h-2 rounded-full bg-mint overflow-hidden">
+              <div class="h-full bg-teal rounded-full" style="width:66%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-4xl shadow-card p-6 flex items-center gap-5">
+          <span class="w-14 h-14 rounded-2xl bg-greenC flex items-center justify-center shrink-0">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.3 2.5 3.6 5.6 3.6 9s-1.3 6.5-3.6 9c-2.3-2.5-3.6-5.6-3.6-9s1.3-6.5 3.6-9z"/></svg>
+          </span>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-display font-bold text-ink truncate">English for Kids</h3>
+            <p class="text-ink/50 text-xs mb-2">12 haftadan 4 tasi tugadi</p>
+            <div class="h-2 rounded-full bg-mint overflow-hidden">
+              <div class="h-full bg-green rounded-full" style="width:33%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="kurslar.html" class="inline-flex items-center gap-1.5 text-teal font-bold text-sm mt-6 hover:gap-2.5 transition-all">
+        Yana kurs qo'shish
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <!-- Shaxsiy ma'lumotlar -->
+    <div class="mt-12 bg-white rounded-4xl shadow-card p-6 sm:p-8">
+      <h2 class="font-display font-extrabold text-xl sm:text-2xl text-ink mb-6">Shaxsiy ma'lumotlar</h2>
+      <dl class="grid sm:grid-cols-2 gap-6">
+        <div>
+          <dt class="text-xs font-semibold text-ink/50 uppercase tracking-wide mb-1.5">To'liq ism</dt>
+          <dd class="text-ink font-medium">Aziza Valiyeva</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold text-ink/50 uppercase tracking-wide mb-1.5">Email</dt>
+          <dd class="text-ink font-medium">aziza.valiyeva@example.com</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold text-ink/50 uppercase tracking-wide mb-1.5">Telefon</dt>
+          <dd class="text-ink font-medium">+998 90 123 45 67</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold text-ink/50 uppercase tracking-wide mb-1.5">Farzand</dt>
+          <dd class="text-ink font-medium">Azizbek, 9 yosh</dd>
+        </div>
+      </dl>
+    </div>
+
   </div>
 </section>
 <footer class="bg-ink text-white">
@@ -215,7 +279,7 @@
     <div class="lg:col-span-2 lg:pr-8">
       <div class="flex items-center gap-2.5 mb-4">
         <span class="w-9 h-9 rounded-full flex items-center justify-center">
-         <img src="images/pdplogo.png" alt="">
+        <img src="images/pdplogo.png" alt="">
         </span>
         <span class="font-display font-extrabold text-lg">PDP Junior</span>
       </div>
@@ -279,5 +343,76 @@
   </div>
 </footer>
 
+<!-- ================= RO'YXATDAN O'TISH MODAL (JS-siz) ================= -->
+<div id="royxatdan-otish-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <a href="#" class="modal-backdrop-link" aria-label="Modalni yopish" tabindex="-1"></a>
+
+  <div class="modal-panel w-full max-w-md bg-white rounded-4xl shadow-soft p-6 sm:p-8 my-auto">
+    <div class="flex items-start justify-between gap-4 mb-1">
+      <div>
+        <p class="text-teal font-bold text-xs tracking-[0.14em] uppercase mb-2">Bir qadam qoldi</p>
+        <h2 id="modal-title" class="font-display font-extrabold text-2xl text-ink leading-tight">Kursga ro'yxatdan o'ting</h2>
+      </div>
+      <a href="#" aria-label="Yopish" class="shrink-0 w-9 h-9 rounded-full bg-mint hover:bg-mintC flex items-center justify-center text-ink transition-colors">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </a>
+    </div>
+    <p class="text-ink/50 text-sm mb-6">Formani to'ldiring — 24 soat ichida siz bilan bog'lanamiz.</p>
+
+    <form>
+      <p class="text-xs font-bold text-ink/60 uppercase tracking-[0.1em] mb-3">Yo'nalish</p>
+      <div class="grid grid-cols-3 gap-2 mb-6">
+        <input type="radio" name="m-yonalish" id="m-y-robot" class="peer/r hidden" checked>
+        <label for="m-y-robot" class="cursor-pointer text-center rounded-2xl border-2 border-black/10 px-1.5 py-3 peer-checked/r:border-teal peer-checked/r:bg-mintC transition-all">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="mx-auto mb-1.5"><rect x="4" y="8" width="16" height="11" rx="4"/><circle cx="9" cy="13.5" r="1" fill="#0B2530"/><circle cx="15" cy="13.5" r="1" fill="#0B2530"/></svg>
+          <span class="text-[11px] font-bold text-ink leading-tight">Robototexnika</span>
+        </label>
+
+        <input type="radio" name="m-yonalish" id="m-y-dastur" class="peer/d hidden">
+        <label for="m-y-dastur" class="cursor-pointer text-center rounded-2xl border-2 border-black/10 px-1.5 py-3 peer-checked/d:border-yellowD peer-checked/d:bg-yellowL transition-all">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="mx-auto mb-1.5"><path d="M9 8L4 12l5 4"/><path d="M15 8l5 4-5 4"/><path d="M13 6l-2 12"/></svg>
+          <span class="text-[11px] font-bold text-ink leading-tight">Dasturlash</span>
+        </label>
+
+        <input type="radio" name="m-yonalish" id="m-y-til" class="peer/t hidden">
+        <label for="m-y-til" class="cursor-pointer text-center rounded-2xl border-2 border-black/10 px-1.5 py-3 peer-checked/t:border-green peer-checked/t:bg-greenC transition-all">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="mx-auto mb-1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.3 2.5 3.6 5.6 3.6 9s-1.3 6.5-3.6 9c-2.3-2.5-3.6-5.6-3.6-9s1.3-6.5 3.6-9z"/></svg>
+          <span class="text-[11px] font-bold text-ink leading-tight">Tillar</span>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="col-span-2">
+          <label for="m-name" class="block text-xs font-semibold text-ink/60 mb-2">Farzandingiz ismi</label>
+          <input id="m-name" type="text" placeholder="Ism Familiya" class="w-full rounded-2xl border border-black/10 px-4 py-3 text-sm placeholder:text-ink/30 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition" />
+        </div>
+        <div>
+          <label for="m-age" class="block text-xs font-semibold text-ink/60 mb-2">Yoshi</label>
+          <select id="m-age" class="w-full rounded-2xl border border-black/10 px-4 py-3 text-sm text-ink/70 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition">
+            <option>6–8</option>
+            <option>9–11</option>
+            <option>12–14</option>
+            <option>15–17</option>
+          </select>
+        </div>
+        <div>
+          <label for="m-phone" class="block text-xs font-semibold text-ink/60 mb-2">Telefon</label>
+          <input id="m-phone" type="tel" placeholder="+998 90 ..." class="w-full rounded-2xl border border-black/10 px-4 py-3 text-sm placeholder:text-ink/30 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition" />
+        </div>
+      </div>
+
+      <label class="flex items-start gap-2.5 mb-6 cursor-pointer">
+        <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-black/20 accent-teal shrink-0">
+        <span class="text-xs text-ink/50 leading-relaxed">Shaxsiy ma'lumotlarimning qayta ishlanishiga roziman.</span>
+      </label>
+
+      <button type="submit" class="w-full inline-flex items-center justify-center gap-2 bg-teal text-white font-bold text-sm px-6 py-3.5 rounded-full hover:bg-ink transition-colors">
+        Arizani yuborish
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <p class="text-center text-[11px] text-ink/40 mt-3">24 soat ichida siz bilan bog'lanamiz</p>
+    </form>
+  </div>
+</div>
 </body>
 </html>

@@ -77,26 +77,51 @@
   .delay-2{animation-delay:.3s}
   .delay-3{animation-delay:.45s}
 
-  /* Pastki chiziqli hover - link underline animate */
   .link-underline{position:relative}
   .link-underline::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:2px;background:currentColor;transition:width .25s ease}
   .link-underline:hover::after{width:100%}
 
-  /* CSS-only tabs (radio hack) uchun */
   .tab-panel{display:none}
   input[type=radio]:checked + label{color:#0B2530}
+
+  /* ===== JS-siz modal (:target orqali) ===== */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(11,37,48,.55);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    display:flex; align-items:flex-start; justify-content:center;
+    padding:5.5rem 1rem 2rem;
+    overflow-y:auto;
+    opacity:0; visibility:hidden;
+    transition:opacity .25s ease, visibility 0s linear .25s;
+  }
+  .modal-overlay:target{
+    opacity:1; visibility:visible;
+    transition:opacity .25s ease, visibility 0s linear 0s;
+  }
+  .modal-backdrop-link{ position:absolute; inset:0; z-index:0; }
+  .modal-panel{
+    position:relative; z-index:1;
+    transform:translateY(14px);
+    transition:transform .25s ease;
+  }
+  .modal-overlay:target .modal-panel{ transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .modal-overlay, .modal-panel{ transition:none; }
+  }
+  @media (max-width: 480px){
+    .modal-overlay{ padding:4.5rem .75rem 1.5rem; align-items:flex-start; }
+  }
 </style>
 </head>
-<body class="bg-white text-ink antialiased">
+<body class="bg-white text-ink antialiased overflow-x-hidden">
 
 <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-black/5">
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
 
       <a href="index.html" class="flex items-center gap-2.5 shrink-0 group">
-        <span class="w-10 h-10 rounded-full flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:rotate-6 transition-transform">
-         <img src="images/pdplogo.png" alt="">
-        </span>
+        <img src="images/pdplogo.png" alt="PDP Junior logotipi" class="w-10 h-10 object-contain shrink-0 group-hover:scale-105 transition-transform" />
         <span class="font-display font-extrabold text-lg text-ink tracking-tight">PDP <span class="text-teal">Junior</span></span>
       </a>
 
@@ -109,7 +134,7 @@
       </nav>
 
       <div class="flex items-center gap-2.5">
-        <a href="royxatdan-otish.html" class="hidden md:inline-flex items-center gap-2 rounded-full bg-teal text-white text-sm font-bold px-5 py-2.5 hover:bg-tealD transition-colors shadow-sm hover:shadow-glow">
+        <a href="#royxatdan-otish-modal" class="hidden md:inline-flex items-center gap-2 rounded-full bg-teal text-white text-sm font-bold px-5 py-2.5 hover:bg-tealD transition-colors shadow-sm hover:shadow-glow">
           Ro'yxatdan o'tish
         </a>
         <a href="profil.html" aria-label="Profil" class="w-11 h-11 rounded-full bg-ink hover:bg-ink2 flex items-center justify-center text-white transition-colors shrink-0">
@@ -124,14 +149,14 @@
   </div>
 
   <input type="checkbox" id="mnav" class="peer hidden">
-  <nav class="lg:hidden max-h-0 peer-checked:max-h-[26rem] overflow-hidden transition-all duration-300 border-t border-black/5 bg-white" aria-label="Mobil menyu">
+  <nav class="lg:hidden max-h-0 peer-checked:max-h-[34rem] overflow-hidden transition-all duration-300 border-t border-black/5 bg-white" aria-label="Mobil menyu">
     <div class="px-6 py-4 flex flex-col gap-1">
       <a href="index.html" class="px-3 py-3 rounded-xl text-sm font-semibold hover:bg-mint">Bosh sahifa</a>
       <a href="kurslar.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Kurslar</a>
       <a href="robototexnika.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Robototexnika</a>
       <a href="dasturlash.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Dasturlash</a>
       <a href="tillar.html" class="px-3 py-3 rounded-xl text-sm font-medium text-ink/70 hover:bg-mint">Tillar</a>
-      <a href="royxatdan-otish.html" class="mt-2 text-center rounded-full bg-teal text-white text-sm font-bold px-5 py-3">Ro'yxatdan o'tish</a>
+      <a href="#royxatdan-otish-modal" class="mt-2 text-center rounded-full bg-teal text-white text-sm font-bold px-5 py-3">Ro'yxatdan o'tish</a>
       <a href="profil.html" class="text-center rounded-full border border-black/10 text-sm font-semibold px-5 py-3">Profil</a>
     </div>
   </nav>
@@ -164,8 +189,6 @@
   </div>
 </section>
 
-<!-- helper: course card template repeated -->
-
 <!-- ================= ROBOTOTEXNIKA ================= -->
 <section id="robototexnika-bolimi" class="max-w-7xl mx-auto px-6 lg:px-8 py-20 scroll-mt-24">
   <div class="flex items-center justify-between mb-8">
@@ -185,7 +208,7 @@
         <p class="text-ink/50 text-xs mb-4">6–10 yosh · 12 hafta</p>
         <div class="flex items-center justify-between">
           <p class="font-display font-extrabold text-ink">149 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
-          <a href="royxatdan-otish.html" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-teal transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          <a href="#royxatdan-otish-modal" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-teal transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
         </div>
       </div>
     </article>
@@ -198,7 +221,7 @@
         <p class="text-ink/50 text-xs mb-4">10–13 yosh · 14 hafta</p>
         <div class="flex items-center justify-between">
           <p class="font-display font-extrabold text-ink">179 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
-          <a href="royxatdan-otish.html" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-teal transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          <a href="#royxatdan-otish-modal" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-teal transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
         </div>
       </div>
     </article>
@@ -211,7 +234,7 @@
         <p class="text-ink/50 text-xs mb-4">12–16 yosh · 16 hafta</p>
         <div class="flex items-center justify-between">
           <p class="font-display font-extrabold text-ink">219 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
-          <a href="royxatdan-otish.html" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-teal transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          <a href="#royxatdan-otish-modal" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-teal transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
         </div>
       </div>
     </article>
@@ -223,7 +246,7 @@
   <div class="max-w-7xl mx-auto px-6 lg:px-8 py-20 scroll-mt-24">
     <div class="flex items-center justify-between mb-8">
       <div class="flex items-center gap-3">
-        <span class="w-11 h-11 rounded-2xl bg-yellowL flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.8"><rect x="2.5" y="8" width="19" height="10" rx="5"/></svg></span>
+        <span class="w-11 h-11 rounded-2xl bg-yellowL flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.8"><path d="M9 8L4 12l5 4"/><path d="M15 8l5 4-5 4"/><path d="M13 6l-2 12"/></svg></span>
         <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-ink">Dasturlash</h2>
       </div>
       <a href="dasturlash.html" class="hidden sm:inline-flex items-center gap-1.5 text-teal font-bold text-sm hover:gap-2.5 transition-all">Yo'nalish sahifasi <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
@@ -231,14 +254,14 @@
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <article class="group rounded-4xl border border-black/5 shadow-card overflow-hidden bg-white hover:-translate-y-2 hover:shadow-soft transition-all duration-300">
-        <div class="bg-yellowL h-40 flex items-center justify-center"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="group-hover:scale-110 transition-transform"><rect x="2.5" y="8" width="19" height="10" rx="5"/></svg></div>
+        <div class="bg-yellowL h-40 flex items-center justify-center"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="group-hover:scale-110 transition-transform"><path d="M9 8L4 12l5 4"/><path d="M15 8l5 4-5 4"/><path d="M13 6l-2 12"/></svg></div>
         <div class="p-6">
           <div class="flex items-center justify-between text-xs mb-2"><span class="text-ink/50 font-medium">Boshlang'ich</span><span class="inline-flex items-center gap-1 font-bold text-ink"><svg width="12" height="12" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>4.8</span></div>
           <h3 class="font-display font-bold text-lg text-ink mb-2">Scratch'da dasturlash</h3>
           <p class="text-ink/50 text-xs mb-4">7–12 yosh · 10 hafta</p>
           <div class="flex items-center justify-between">
             <p class="font-display font-extrabold text-ink">129 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
-            <a href="royxatdan-otish.html" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-yellowD transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+            <a href="#royxatdan-otish-modal" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-yellowD transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
           </div>
         </div>
       </article>
@@ -251,7 +274,7 @@
           <p class="text-ink/50 text-xs mb-4">11–15 yosh · 14 hafta</p>
           <div class="flex items-center justify-between">
             <p class="font-display font-extrabold text-ink">159 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
-            <a href="royxatdan-otish.html" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-yellowD transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+            <a href="#royxatdan-otish-modal" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-yellowD transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
           </div>
         </div>
       </article>
@@ -264,7 +287,7 @@
           <p class="text-ink/50 text-xs mb-4">12–16 yosh · 16 hafta</p>
           <div class="flex items-center justify-between">
             <p class="font-display font-extrabold text-ink">189 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
-            <a href="royxatdan-otish.html" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-yellowD transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+            <a href="#royxatdan-otish-modal" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-yellowD transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
           </div>
         </div>
       </article>
@@ -276,7 +299,7 @@
 <section id="tillar-bolimi" class="max-w-7xl mx-auto px-6 lg:px-8 py-20 scroll-mt-24">
   <div class="flex items-center justify-between mb-8">
     <div class="flex items-center gap-3">
-      <span class="w-11 h-11 rounded-2xl bg-greenC flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 16l3-8 3 8M8.8 13.5h4.4"/></svg></span>
+      <span class="w-11 h-11 rounded-2xl bg-greenC flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.3 2.5 3.6 5.6 3.6 9s-1.3 6.5-3.6 9c-2.3-2.5-3.6-5.6-3.6-9s1.3-6.5 3.6-9z"/></svg></span>
       <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-ink">Tillar</h2>
     </div>
     <a href="tillar.html" class="hidden sm:inline-flex items-center gap-1.5 text-teal font-bold text-sm hover:gap-2.5 transition-all">Yo'nalish sahifasi <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
@@ -284,14 +307,14 @@
 
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
     <article class="group rounded-4xl border border-black/5 shadow-card overflow-hidden hover:-translate-y-2 hover:shadow-soft transition-all duration-300">
-      <div class="bg-greenC h-40 flex items-center justify-center"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="group-hover:scale-110 transition-transform"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 16l3-8 3 8M8.8 13.5h4.4"/></svg></div>
+      <div class="bg-greenC h-40 flex items-center justify-center"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="group-hover:scale-110 transition-transform"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.3 2.5 3.6 5.6 3.6 9s-1.3 6.5-3.6 9c-2.3-2.5-3.6-5.6-3.6-9s1.3-6.5 3.6-9z"/></svg></div>
       <div class="p-6">
         <div class="flex items-center justify-between text-xs mb-2"><span class="text-ink/50 font-medium">Boshlang'ich</span><span class="inline-flex items-center gap-1 font-bold text-ink"><svg width="12" height="12" viewBox="0 0 24 24" fill="#F6C94D"><path d="M12 2l3.1 6.3 6.9 1-5 4.9L18.2 21 12 17.8 5.8 21 7 14.2l-5-4.9 6.9-1z"/></svg>4.9</span></div>
         <h3 class="font-display font-bold text-lg text-ink mb-2">English for Kids</h3>
         <p class="text-ink/50 text-xs mb-4">6–12 yosh · 12 hafta</p>
         <div class="flex items-center justify-between">
           <p class="font-display font-extrabold text-ink">119 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
-          <a href="royxatdan-otish.html" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-green transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          <a href="#royxatdan-otish-modal" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-green transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
         </div>
       </div>
     </article>
@@ -304,7 +327,7 @@
         <p class="text-ink/50 text-xs mb-4">12–17 yosh · 20 hafta</p>
         <div class="flex items-center justify-between">
           <p class="font-display font-extrabold text-ink">159 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
-          <a href="royxatdan-otish.html" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-green transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          <a href="#royxatdan-otish-modal" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-green transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
         </div>
       </div>
     </article>
@@ -317,7 +340,7 @@
         <p class="text-ink/50 text-xs mb-4">7–13 yosh · 12 hafta</p>
         <div class="flex items-center justify-between">
           <p class="font-display font-extrabold text-ink">109 000 <span class="text-xs font-medium text-ink/40">so'm/oy</span></p>
-          <a href="royxatdan-otish.html" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-green transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          <a href="#royxatdan-otish-modal" class="w-10 h-10 rounded-full bg-ink flex items-center justify-center text-white group-hover:bg-green transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
         </div>
       </div>
     </article>
@@ -331,7 +354,7 @@
       <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mb-2">O'zingizga mos kursni topolmadingizmi?</h2>
       <p class="text-white/50 text-sm">Mentorlarimiz farzandingiz uchun eng to'g'ri yo'nalishni tanlashda yordam beradi.</p>
     </div>
-    <a href="royxatdan-otish.html" class="inline-flex items-center gap-2 bg-teal text-white font-bold text-sm px-7 py-4 rounded-full hover:bg-white hover:text-ink transition-colors shrink-0">
+    <a href="#royxatdan-otish-modal" class="inline-flex items-center gap-2 bg-teal text-white font-bold text-sm px-7 py-4 rounded-full hover:bg-white hover:text-ink transition-colors shrink-0">
       Konsultatsiya olish
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
@@ -343,7 +366,7 @@
     <div class="lg:col-span-2 lg:pr-8">
       <div class="flex items-center gap-2.5 mb-4">
         <span class="w-9 h-9 rounded-full flex items-center justify-center">
-         <img src="images/pdplogo.png" alt="">
+        <img src="images/pdplogo.png" alt="">
         </span>
         <span class="font-display font-extrabold text-lg">PDP Junior</span>
       </div>
@@ -407,5 +430,76 @@
   </div>
 </footer>
 
+<!-- ================= RO'YXATDAN O'TISH MODAL (JS-siz) ================= -->
+<div id="royxatdan-otish-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <a href="#" class="modal-backdrop-link" aria-label="Modalni yopish" tabindex="-1"></a>
+
+  <div class="modal-panel w-full max-w-md bg-white rounded-4xl shadow-soft p-6 sm:p-8 my-auto">
+    <div class="flex items-start justify-between gap-4 mb-1">
+      <div>
+        <p class="text-teal font-bold text-xs tracking-[0.14em] uppercase mb-2">Bir qadam qoldi</p>
+        <h2 id="modal-title" class="font-display font-extrabold text-2xl text-ink leading-tight">Kursga ro'yxatdan o'ting</h2>
+      </div>
+      <a href="#" aria-label="Yopish" class="shrink-0 w-9 h-9 rounded-full bg-mint hover:bg-mintC flex items-center justify-center text-ink transition-colors">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </a>
+    </div>
+    <p class="text-ink/50 text-sm mb-6">Formani to'ldiring — 24 soat ichida siz bilan bog'lanamiz.</p>
+
+    <form>
+      <p class="text-xs font-bold text-ink/60 uppercase tracking-[0.1em] mb-3">Yo'nalish</p>
+      <div class="grid grid-cols-3 gap-2 mb-6">
+        <input type="radio" name="m-yonalish" id="m-y-robot" class="peer/r hidden" checked>
+        <label for="m-y-robot" class="cursor-pointer text-center rounded-2xl border-2 border-black/10 px-1.5 py-3 peer-checked/r:border-teal peer-checked/r:bg-mintC transition-all">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="mx-auto mb-1.5"><rect x="4" y="8" width="16" height="11" rx="4"/><circle cx="9" cy="13.5" r="1" fill="#0B2530"/><circle cx="15" cy="13.5" r="1" fill="#0B2530"/></svg>
+          <span class="text-[11px] font-bold text-ink leading-tight">Robototexnika</span>
+        </label>
+
+        <input type="radio" name="m-yonalish" id="m-y-dastur" class="peer/d hidden">
+        <label for="m-y-dastur" class="cursor-pointer text-center rounded-2xl border-2 border-black/10 px-1.5 py-3 peer-checked/d:border-yellowD peer-checked/d:bg-yellowL transition-all">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="mx-auto mb-1.5"><path d="M9 8L4 12l5 4"/><path d="M15 8l5 4-5 4"/><path d="M13 6l-2 12"/></svg>
+          <span class="text-[11px] font-bold text-ink leading-tight">Dasturlash</span>
+        </label>
+
+        <input type="radio" name="m-yonalish" id="m-y-til" class="peer/t hidden">
+        <label for="m-y-til" class="cursor-pointer text-center rounded-2xl border-2 border-black/10 px-1.5 py-3 peer-checked/t:border-green peer-checked/t:bg-greenC transition-all">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2530" stroke-width="1.6" class="mx-auto mb-1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.3 2.5 3.6 5.6 3.6 9s-1.3 6.5-3.6 9c-2.3-2.5-3.6-5.6-3.6-9s1.3-6.5 3.6-9z"/></svg>
+          <span class="text-[11px] font-bold text-ink leading-tight">Tillar</span>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="col-span-2">
+          <label for="m-name" class="block text-xs font-semibold text-ink/60 mb-2">Farzandingiz ismi</label>
+          <input id="m-name" type="text" placeholder="Ism Familiya" class="w-full rounded-2xl border border-black/10 px-4 py-3 text-sm placeholder:text-ink/30 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition" />
+        </div>
+        <div>
+          <label for="m-age" class="block text-xs font-semibold text-ink/60 mb-2">Yoshi</label>
+          <select id="m-age" class="w-full rounded-2xl border border-black/10 px-4 py-3 text-sm text-ink/70 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition">
+            <option>6–8</option>
+            <option>9–11</option>
+            <option>12–14</option>
+            <option>15–17</option>
+          </select>
+        </div>
+        <div>
+          <label for="m-phone" class="block text-xs font-semibold text-ink/60 mb-2">Telefon</label>
+          <input id="m-phone" type="tel" placeholder="+998 90 ..." class="w-full rounded-2xl border border-black/10 px-4 py-3 text-sm placeholder:text-ink/30 focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition" />
+        </div>
+      </div>
+
+      <label class="flex items-start gap-2.5 mb-6 cursor-pointer">
+        <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-black/20 accent-teal shrink-0">
+        <span class="text-xs text-ink/50 leading-relaxed">Shaxsiy ma'lumotlarimning qayta ishlanishiga roziman.</span>
+      </label>
+
+      <button type="submit" class="w-full inline-flex items-center justify-center gap-2 bg-teal text-white font-bold text-sm px-6 py-3.5 rounded-full hover:bg-ink transition-colors">
+        Arizani yuborish
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <p class="text-center text-[11px] text-ink/40 mt-3">24 soat ichida siz bilan bog'lanamiz</p>
+    </form>
+  </div>
+</div>
 </body>
 </html>
